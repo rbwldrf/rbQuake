@@ -1005,6 +1005,28 @@ static void R_ClearBatch (cb_context_t *cbx)
 	cbx->num_vbo_indices = 0;
 }
 
+
+world_pos_t FloatToWorldPos (vec3_t v)
+{
+	world_pos_t pos;
+	pos.x = (int64_t)(v[0] * 128.0);
+	pos.y = (int64_t)(v[1] * 128.0);
+	pos.z = (int64_t)(v[2] * 128.0);
+	return pos;
+}
+
+void WorldPosToFloat(world_pos_t pos, vec3_t out) {
+
+	out[0] = (float)(pos.x) / 128.0;
+	out[1] = (float)(pos.y) / 128.0;
+	out[2] = (float)(pos.z) / 128.0;
+}
+
+void R_RenderOctrees (void) {
+
+}
+
+
 /*
 ================
 R_FlushBatch

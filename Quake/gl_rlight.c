@@ -34,6 +34,8 @@ extern cvar_t r_gpulightmapupdate;
 R_AnimateLight
 ==================
 */
+
+//TODO: implement spline-based animation for lights a la s&box
 void R_AnimateLight (void)
 {
 	int	   i, j, k, n;

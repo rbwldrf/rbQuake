@@ -152,6 +152,17 @@ typedef struct
 	int ambientlight;
 } refdef_t;
 
+typedef struct {
+	int64_t x, y, z;
+} world_pos_t;
+
+typedef struct {
+	world_pos_t min, max;
+} world_bounds_t;
+
+world_pos_t FloatToWorldPos (vec3_t v);
+void		WorldPosToFloat (world_pos_t pos, vec3_t out);
+
 //
 // refresh
 //
@@ -185,6 +196,8 @@ void R_LavaSplash (vec3_t org);
 void R_TeleportSplash (vec3_t org);
 
 void R_PushDlights (void);
+
+void R_RenderOctrees (void);
 
 //
 // surface cache related
