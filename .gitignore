@@ -17,6 +17,7 @@ Shaders/Compiled/Release/*.d
 Shaders/*.exe
 Shaders/*.obj
 Shaders/bintoc
+Windows/*.aps
 Windows/VisualStudio/.vs
 Windows/VisualStudio/Build-*
 Windows/VisualStudio/enc_temp_folder
