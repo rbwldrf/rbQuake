@@ -173,11 +173,6 @@ typedef struct octree_node_s
 	struct octree_node_s *children[8]; // Eight child nodes
 	int					  contents;	   // For leaves
 
-	// Visibility data
-	unsigned char *pvs; // Visibility bitfield
-	int			   num_visible_nodes;
-	int			  *visible_nodes; // Indices of visible nodes
-
 	// Model references
 	int num_models; // Number of models in this node
 	struct
@@ -187,6 +182,11 @@ typedef struct octree_node_s
 		vec3_t		angles;		// Orientation
 		float		scale;		// Size multiplier
 	} *models;					// Array of model instances
+
+	// Visibility data
+	unsigned char *pvs; // Visibility bitfield
+	int			   num_visible_nodes;
+	int			  *visible_nodes; // Indices of visible nodes
 
 } octree_node_t;
 
