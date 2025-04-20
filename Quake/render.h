@@ -152,6 +152,13 @@ typedef struct
 	int ambientlight;
 } refdef_t;
 
+// ============================
+//
+//           rbQuake
+//
+// ============================
+
+
 typedef struct {
 	int64_t x, y, z;
 } world_pos_t;
@@ -160,8 +167,63 @@ typedef struct {
 	world_pos_t min, max;
 } world_bounds_t;
 
+typedef struct octree_node_s
+{
+	world_bounds_t		  bounds;	   // Quantized bounds
+	struct octree_node_s *children[8]; // Eight child nodes
+	int					  contents;	   // For leaves
+
+	// Visibility data
+	unsigned char *pvs; // Visibility bitfield
+	int			   num_visible_nodes;
+	int			  *visible_nodes; // Indices of visible nodes
+
+	// Model references
+	int num_models; // Number of models in this node
+	struct
+	{
+		int			modelindex; // Index into model array
+		world_pos_t origin;		// Position in world space
+		vec3_t		angles;		// Orientation
+		float		scale;		// Size multiplier
+	} *models;					// Array of model instances
+
+} octree_node_t;
+
+typedef struct octree_s
+{
+	octree_node_t *root;
+	int			   total_nodes;
+	int			   max_depth;
+
+	// Origin for local coordinate system
+	world_pos_t world_origin;
+
+	// Current player/camera chunk position
+	world_pos_t view_chunk;
+} octree_t;
+
+typedef struct world_chunk_s
+{
+	int64_t				  x, y, z; // Chunk coordinates
+	octree_t			 *octree;  // Octree for this chunk
+	struct world_chunk_s *next;	   // For hash table
+	bool				  loaded;  // Is chunk loaded
+	// Additional chunk data
+} world_chunk_t;
+
+typedef struct world_s
+{
+	world_chunk_t **chunk_hash; // Hash table of loaded chunks
+	int				num_loaded_chunks;
+	world_pos_t		player_pos; // Current player position
+} world_t;
+
 world_pos_t FloatToWorldPos (vec3_t v);
 void		WorldPosToFloat (world_pos_t pos, vec3_t out);
+
+void R_RenderOctrees (cb_context_t *cbx);
+
 
 //
 // refresh
@@ -197,7 +259,6 @@ void R_TeleportSplash (vec3_t org);
 
 void R_PushDlights (void);
 
-void R_RenderOctrees (void);
 
 //
 // surface cache related

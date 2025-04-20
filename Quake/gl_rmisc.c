@@ -60,6 +60,8 @@ extern cvar_t r_tasks;
 extern cvar_t r_parallelmark;
 extern cvar_t r_usesops;
 
+extern cvar_t r_visiblechunks;
+
 extern cvar_t r_drawwater_fast;
 
 #if defined(USE_SIMD)
@@ -3568,6 +3570,8 @@ void R_Init (void)
 	Cmd_AddCommand ("timerefresh", R_TimeRefresh_f);
 	Cmd_AddCommand ("pointfile", R_ReadPointFile_f);
 	Cmd_AddCommand ("vkmemstats", R_VulkanMemStats_f);
+
+	Cvar_RegisterVariable (&r_visiblechunks);
 
 	Cvar_RegisterVariable (&r_fullbright);
 	Cvar_RegisterVariable (&r_lightmap);

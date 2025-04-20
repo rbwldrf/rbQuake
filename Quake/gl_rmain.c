@@ -119,6 +119,9 @@ cvar_t r_tasks = {"r_tasks", "1", CVAR_NONE};
 cvar_t			r_indirect = {"r_indirect", "1", CVAR_NONE};
 extern qboolean indirect_ready;
 
+cvar_t r_visiblechunks = {"r_visiblechunks", "3", CVAR_ARCHIVE};
+
+
 extern SDL_mutex *draw_qcvm_mutex;
 
 static atomic_uint32_t next_visedict;

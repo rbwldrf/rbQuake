@@ -36,6 +36,8 @@ extern cvar_t r_gpulightmapupdate;
 extern cvar_t vid_filter;
 extern cvar_t vid_palettize;
 
+extern cvar_t r_visiblechunks;
+
 cvar_t r_parallelmark = {"r_parallelmark", "1", CVAR_NONE};
 
 // vso - in some cases, R_DrawTextureChains_Water oprimization
@@ -1022,11 +1024,6 @@ void WorldPosToFloat(world_pos_t pos, vec3_t out) {
 	out[2] = (float)(pos.z) / 128.0;
 }
 
-void R_RenderOctrees (void) {
-
-}
-
-
 /*
 ================
 R_FlushBatch
@@ -1385,4 +1382,25 @@ void R_DrawWorld_ShowTris (cb_context_t *cbx)
 		return;
 
 	R_DrawTextureChains_ShowTris (cbx, cl.worldmodel, chain_world);
+}
+
+
+void R_RenderOctrees (cb_context_t *cbx)
+{
+	int visible_range = (int)r_visiblechunks.value;
+
+	float cx = r_origin[0];
+	float cy = r_origin[1];
+	float cz = r_origin[2];
+
+	for (int x = cx - visible_range; x <= cx + visible_range; x++)
+	{
+		for (int y = cy - visible_range; y <= cy + visible_range; y++)
+		{
+			for (int z = cz - visible_range; z <= cz + visible_range; z++)
+			{
+				R_DrawTextureChains_Multitexture (cbx, cl.worldmodel, NULL, chain_world, 1, world_texstart[0], world_texend[0]);
+			}
+		}
+	}
 }

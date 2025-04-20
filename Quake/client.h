@@ -232,6 +232,7 @@ typedef struct
 
 	// refresh related state
 	struct qmodel_s *worldmodel; // cl_entitites[0].model
+	struct octree_node_t *octree;
 	struct efrag_s	*free_efrags;
 	int				 num_efrags;
 	struct efrag_s **efrag_allocs;
